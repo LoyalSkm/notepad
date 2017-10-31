@@ -1,3 +1,13 @@
+if (Gem.win_platform?) #ДЛЯ РАБОТЫ В КОНСОЛИ РУБИМАЙН ДЛЯ ВИНДОУС
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_external = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+
+  end
+end
+
 require 'date' #будит привязываться к датам
 
 class Task < Post
@@ -26,6 +36,20 @@ class Task < Post
 
     return [deadline, @text, time_string]
 
+  end
+
+  def to_db_hash
+    return super.merge (   #с помощью этого ключа полоучается доступ к родительскому классу
+    {
+        'text' => @text,
+        'due_date' => @due_date.to_s
+    }
+                       )
+  end
+  def load_date(data_hash)
+    super(data_hash) # сперва дергаем родительскией метод для общих полей
+    # теперь прописываем свое специфичное поле
+    @due_date = Date.parse(data_hash['due_date'])
   end
 
 end

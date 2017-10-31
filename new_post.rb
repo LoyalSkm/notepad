@@ -14,10 +14,10 @@ require_relative 'link.rb'
 require_relative 'memo.rb'
 require_relative 'task.rb'
 
-puts "yoyoyoy Niga "
+puts "yoyoyoy Niga V2 +Sqlite "
 puts "Пиши свой бред"
 
-choices = Post.post_types
+choices = Post.post_types.keys
 
 choice = -1
 
@@ -30,10 +30,10 @@ until choice >=0 && choice < choices.size          #опрос в цыкле п�
 
 end
 
-entry = Post.create(choice)
+entry = Post.create(choices[choice])
 
 entry.read_from_console
 
-entry.save
+id = entry.save_to_db
 
-puts "ок лол"
+puts "ок лол, id = #{id}"
