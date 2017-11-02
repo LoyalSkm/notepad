@@ -1,5 +1,7 @@
 
 require 'sqlite3'
+require 'sqlite3'
+
 
 class Post
 
@@ -7,7 +9,7 @@ class Post
 
   def self.post_types
 
-    {'Memo' => Memo, 'Link' => Link, 'Task' => Task}
+    {'Memo' => Memo, 'Link' => Link, 'Task' => Task, 'Tweet' => Tweet}
   end
 
   def self.create (type)
